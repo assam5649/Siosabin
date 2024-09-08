@@ -3,4 +3,7 @@ until mysqladmin ping -h db -P 3306 -u root -ppass; do
   sleep 2
 done
 echo "app is starting...!"
-# exec python run ../main.go
+pip install requests
+pip install mysql-connector-python
+
+python ./main.py
