@@ -1,7 +1,9 @@
 services:
   api:
     container_name: python-container
-    build: ./api/
+    build: 
+      context: .
+      dockerfile: ./api/dockerfile
     volumes:
     - ./src:/app/
     ports:

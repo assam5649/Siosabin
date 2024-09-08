@@ -8,5 +8,4 @@ COPY ./src/ /app/
 
 WORKDIR /app/sh/
 
-
 CMD ["sh", "./start_app.sh"]
