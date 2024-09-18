@@ -1,0 +1,17 @@
+# ベースイメージの指定
+FROM python:latest
+
+# 作業ディレクトリを設定
+WORKDIR /app
+
+# 依存ファイルをコピー
+COPY requirements.txt requirements.txt
+
+# 依存関係のインストール
+RUN pip install -r requirements.txt
+
+# アプリケーションのコードをコピー
+COPY . .
+
+# Flaskアプリを実行
+CMD ["python", "app.py"]
