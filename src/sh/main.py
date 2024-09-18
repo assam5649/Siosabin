@@ -1,19 +1,18 @@
-import requests
-import mysql.connector
+from flask import Flask, request, jsonify
 
-url = 'https://www.exsample.com/'
+app = Flask(__name__)
 
-r = requests.get(url)
+@app.route('/post-json', methods=['POST'])
+def post_json():
+    print(request.data)  # Print raw request data for debugging
+    try:
+        data = request.get_json()  # Attempt to parse the JSON
+        if data is None:
+            return "Bad Request: No JSON received", 400
+        return jsonify(data)
+    except Exception as e:
+        print(f"Error parsing JSON: {e}")
+        return "Bad Request: Invalid JSON", 400
 
-conn = mysql.connector.connect(
-    host='mysql-container',
-    port='3306',
-    user='root',
-    password='pass',
-    database='dbdata'
-)
-
-conn.ping(reconnect=True)
-
-print(conn.is_connected())
-print(r.text)
+if __name__ == "__main__":
+    app.run(debug=True)

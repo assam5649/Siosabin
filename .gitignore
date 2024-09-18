@@ -1,3 +1,4 @@
 db/dbdata/*
 !db/dbdata/.keep
 .venv/
+requirements.txt
