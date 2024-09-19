@@ -11,7 +11,6 @@ def post_json():
         if data is None:
             return "Bad Request: No JSON received", 400
         connect(data)
-        
         return jsonify(data)
     except Exception as e:
         print(f"Error parsing JSON: {e}")
