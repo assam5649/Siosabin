@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+from mysqlconnector import connect
 
 app = Flask(__name__)
 
@@ -9,6 +10,9 @@ def post_json():
         data = request.get_json()  # Attempt to parse the JSON
         if data is None:
             return "Bad Request: No JSON received", 400
+        print(data)
+        connect()
+        
         return jsonify(data)
     except Exception as e:
         print(f"Error parsing JSON: {e}")
