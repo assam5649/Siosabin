@@ -1,3 +1,4 @@
 db/dbdata/*
 !db/dbdata/.keep
 .venv/
+./src/sh/__pycache__
