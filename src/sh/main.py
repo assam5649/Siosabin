@@ -10,8 +10,7 @@ def post_json():
         data = request.get_json()  # Attempt to parse the JSON
         if data is None:
             return "Bad Request: No JSON received", 400
-        print(data)
-        connect()
+        connect(data)
         
         return jsonify(data)
     except Exception as e:

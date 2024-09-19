@@ -1,7 +1,7 @@
 import mysql.connector
 
 
-def connect():
+def connect(data):
     conn = mysql.connector.connect(
         host='mysql-container',
         port='3306',
@@ -15,9 +15,7 @@ def connect():
 
     cur = conn.cursor()
     
-    cur.execute("INSERT INTO users (id, name, password, location, remaining, salinity) VALUES (2, 'python', 'pythonpass', 'POINT(130.10 30.20)', 60, 0.4)")
-
-    cur.execute("INSERT INTO data (id, max_temp, min_temp, ave_temp, ave_humidity, ave_windvelocity, max_windvelocity) VALUES (2, 20.1, 20.0, 20.2, 80, 2.4, 2.6)")
+    cur.execute("INSERT INTO users (name, password, location, remaining, salinity) VALUES (%s, %s, %s, %s, %s)", (data['name'], data['password'], data['location'], data['remaining'], data['salinity']))
 
     conn.commit()
 
