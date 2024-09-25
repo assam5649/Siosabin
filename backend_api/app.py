@@ -25,7 +25,8 @@ def Get():
 
     cur = conn.cursor()
 
-    cur.execute("SELECT * FROM users WHERE id = %s", [1])
+    cur.execute("SELECT * FROM users WHERE name = %s ORDER BY id DESC LIMIT 1", )
+    
     cur.statement
     print(cur.fetchone())
 
