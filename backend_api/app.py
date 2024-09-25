@@ -25,7 +25,8 @@ def Get():
 
     cur = conn.cursor()
 
-    cur.execute("SELECT * FROM users WHERE name = %s ORDER BY id DESC LIMIT 1", "ここに文字列nameを入れる")
+    cur.execute("SELECT * FROM users WHERE name = %s ORDER BY id DESC LIMIT 1", (name,))
+
     
     cur.statement
     print(cur.fetchone())
