@@ -1,5 +1,5 @@
 # app.py
-from flask import Flask, jsonify
+from flask import Flask, request, jsonify
 import mysql.connector
 from get import Get
 
@@ -7,8 +7,8 @@ app = Flask(__name__)
 
 @app.route('/api/hello', methods=['GET'])
 def hello():
-    name = 'a'
-    result = Get(name)
+    name = request.args.get('name')
+    result = Get(str(name))
     return jsonify(message=result)
 
 if __name__ == "__main__":
