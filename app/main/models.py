@@ -1,7 +1,7 @@
 import mysql.connector
 from mysql.connector import errorcode
 
-def initdb():
+def data():
     try:
         # データベース接続の設定
         cnx = mysql.connector.connect(
@@ -17,18 +17,6 @@ def initdb():
 
         cursor.execute("USE db;")
 
-        # テーブル作成のクエリ
-        create_users_query = """
-        CREATE TABLE IF NOT EXISTS users (
-            id INT PRIMARY KEY AUTO_INCREMENT,
-            name VARCHAR(255) NOT NULL,
-            password VARCHAR(255) NOT NULL,
-            location VARCHAR(255),
-            remaining INT,
-            salinity FLOAT
-        )
-        """
-
         create_data_query = """
         CREATE TABLE IF NOT EXISTS data (
             id INT PRIMARY KEY AUTO_INCREMENT,
@@ -40,25 +28,15 @@ def initdb():
             max_windvelocity FLOAT
         )
         """
-
-        # テーブルを作成
-        cursor.execute(create_users_query)
         cursor.execute(create_data_query)
 
-        insert_users_query = """
-        INSERT INTO users 
-        (name, password, location, remaining, salinity)
-        VALUES 
-        ('a', 'aPass', 'POINT(137.10 35.20)', 70, 0.2);"""
-
+        
         insert_data_query = """
         INSERT INTO data
         (max_temp, min_temp, ave_temp, ave_humidity, ave_windvelocity, max_windvelocity)
         VALUES
         (25.1, 22.0, 23.2, 80, 2.4, 2.6);"""
 
-        cursor.execute(insert_users_query)
-        cnx.commit()
         cursor.execute(insert_data_query)
         cnx.commit()
 

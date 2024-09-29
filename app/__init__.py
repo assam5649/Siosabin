@@ -7,9 +7,12 @@ def create_app():
     app.register_blueprint(main_blueprint, url_prefix='/main')
 
     from .main import models
-    models.initdb()
+    models.data()
 
-    # from .auth import auth as auth_blueprint
-    # app.register_blueprint(auth_blueprint, urlprefix='/auth')
+    from .auth import auth as auth_blueprint
+    app.register_blueprint(auth_blueprint, urlprefix='/auth')
+
+    from .auth import models
+    models.user()
 
     return app
