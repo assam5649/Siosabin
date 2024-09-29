@@ -21,3 +21,4 @@ def connect(data):
 
     cur.close()
     conn.close()
+    
