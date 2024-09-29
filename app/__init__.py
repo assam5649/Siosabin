@@ -10,7 +10,7 @@ def create_app():
     models.data()
 
     from .auth import auth as auth_blueprint
-    app.register_blueprint(auth_blueprint, urlprefix='/auth')
+    app.register_blueprint(auth_blueprint, url_prefix='/auth')
 
     from .auth import models
     models.user()
