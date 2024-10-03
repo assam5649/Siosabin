@@ -2,3 +2,7 @@ Flask
 mysql-connector-python
 flask_httpauth
 werkzeug
+scikit-learn
+torch
+pandas
+numpy

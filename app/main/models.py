@@ -20,22 +20,22 @@ def data():
         create_data_query = """
         CREATE TABLE IF NOT EXISTS data (
             id INT PRIMARY KEY AUTO_INCREMENT,
-            max_temp FLOAT,
-            min_temp FLOAT,
-            ave_temp FLOAT,
-            ave_humidity INT,
-            ave_windvelocity FLOAT,
-            max_windvelocity FLOAT
-        )
+            device_id INT,
+            location VARCHAR(255),
+            in_tank INT,
+            out_tank INT,
+            salinity INT
+        );
         """
+        
         cursor.execute(create_data_query)
 
         
         insert_data_query = """
         INSERT INTO data
-        (max_temp, min_temp, ave_temp, ave_humidity, ave_windvelocity, max_windvelocity)
+        (device_id, location, in_tank, out_tank, salinity)
         VALUES
-        (25.1, 22.0, 23.2, 80, 2.4, 2.6);"""
+        (11, 'POINT(137.10 35.20)', 70, 30, 20);"""
 
         cursor.execute(insert_data_query)
         cnx.commit()

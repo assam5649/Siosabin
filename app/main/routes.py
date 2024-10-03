@@ -23,4 +23,3 @@ def create_user():#POST
 def get_user(user_name):
     result = get_user_service(str(user_name))
     return jsonify(message=result)
-    
