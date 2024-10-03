@@ -2,6 +2,10 @@ from flask import jsonify, request
 from . import auth
 from .services import login_service, register_service
 
+@auth.route('/')
+def index():
+    return jsonify({'message': 'Welcome to the auth Module...'})
+
 @auth.route('/register', methods=['POST'])
 def register():
     print(request.data)  # Print raw request data for debugging
