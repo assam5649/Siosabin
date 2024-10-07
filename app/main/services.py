@@ -35,7 +35,7 @@ def get_user_service(user_name):
 
     cur = config.cursor()
 
-    cur.execute("SELECT * FROM users WHERE name = %s ORDER BY id DESC LIMIT 1", (user_name,))
+    cur.execute("SELECT * FROM data WHERE name = %s ORDER BY id DESC LIMIT 1", (user_name,))
 
     
     cur.statement
