@@ -21,7 +21,7 @@ def create_user_service(data):
     cur.close()
     config.close()
 
-def get_user_service(user_name):
+def get_user_service(device_id):
     config = mysql.connector.connect(
         host='mysql-container',
         port='3306',
@@ -35,7 +35,7 @@ def get_user_service(user_name):
 
     cur = config.cursor()
 
-    cur.execute("SELECT * FROM data WHERE name = %s ORDER BY id DESC LIMIT 1", (user_name,))
+    cur.execute("SELECT * FROM data WHERE device_id = %s ORDER BY id DESC LIMIT 1", (device_id,))
 
     
     cur.statement

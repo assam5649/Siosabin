@@ -19,7 +19,7 @@ def create_user():#POST
         print(f"Error parsing JSON: {e}")
         return "Bad Request: Invalid JSON", 400
     
-@main.route('/users/<string:user_name>', methods=['GET'])
-def get_user(user_name):
-    result = get_user_service(str(user_name))
+@main.route('/users/<int:device_id>', methods=['GET'])
+def get_user(device_id):
+    result = get_user_service(device_id)
     return jsonify(message=result)
