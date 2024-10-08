@@ -3,7 +3,6 @@ from mysql.connector import errorcode
 
 def user():
     try:
-        # データベース接続の設定
         cnx = mysql.connector.connect(
                 host='mysql-container',
                 port='3306',
@@ -12,12 +11,10 @@ def user():
                 database='db'
         )
 
-        # データベースに接続
         cursor = cnx.cursor()
 
         cursor.execute("USE db;")
 
-        # テーブル作成のクエリ
         create_users_query = """
         CREATE TABLE IF NOT EXISTS users (
             id INT PRIMARY KEY AUTO_INCREMENT,
@@ -28,7 +25,6 @@ def user():
         )
         """
 
-        # テーブルを作成
         cursor.execute(create_users_query)
 
         insert_users_query = """
@@ -47,7 +43,9 @@ def user():
             print("データベースが見つかりません。")
         else:
             print(err)
+            
     finally:
-        # 接続を閉じる
-        cursor.close()
-        cnx.close()
+        if cursor:
+            cursor.close()
+        if cnx:
+            cnx.close()

@@ -3,7 +3,6 @@ from mysql.connector import errorcode
 
 def data():
     try:
-        # データベース接続の設定
         cnx = mysql.connector.connect(
                 host='mysql-container',
                 port='3306',
@@ -12,7 +11,6 @@ def data():
                 database='db'
         )
 
-        # データベースに接続
         cursor = cnx.cursor()
 
         cursor.execute("USE db;")
@@ -47,7 +45,9 @@ def data():
             print("データベースが見つかりません。")
         else:
             print(err)
+            
     finally:
-        # 接続を閉じる
-        cursor.close()
-        cnx.close()
+        if cursor:
+            cursor.close()
+        if cnx:
+            cnx.close()
