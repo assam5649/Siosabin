@@ -1,5 +1,5 @@
 # ベースイメージの指定
-FROM python:latest
+FROM python:3.11-slim
 
 # 作業ディレクトリを設定
 WORKDIR /app
