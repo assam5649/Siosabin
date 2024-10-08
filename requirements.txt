@@ -3,6 +3,6 @@ mysql-connector-python
 flask_httpauth
 werkzeug
 scikit-learn
-torch
+torch==2.0.1
 pandas
 numpy
