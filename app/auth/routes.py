@@ -8,26 +8,24 @@ def index():
 
 @auth.route('/register', methods=['POST'])
 def register():
-    print(request.data)  # Print raw request data for debugging
     try:
-        data = request.get_json()  # Attempt to parse the JSON
+        data = request.get_json()
         if data is None:
             return "Bad Request: No JSON received", 400
-        result = register_service(data)
-        return jsonify(result)
+        response, status_code = register_service(data)
+        return (jsonify(response)), status_code
     except Exception as e:
         print(f"Error parsing JSON: {e}")
         return "Bad Request: Invalid JSON", 400
 
 @auth.route('/login', methods=['POST'])
 def login():
-    print(request.data)  # Print raw request data for debugging
     try:
-        data = request.get_json()  # Attempt to parse the JSON
+        data = request.get_json()
         if data is None:
             return "Bad Request: No JSON received", 400
-        response = login_service(data)
-        return jsonify(response)
+        response, status_code = login_service(data)
+        return (jsonify(response)), status_code
     except Exception as e:
         print(f"Error parsing JSON: {e}")
         return "Bad Request: Invalid JSON", 400    

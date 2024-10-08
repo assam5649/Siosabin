@@ -7,19 +7,18 @@ def index():
     return jsonify({'message': 'Welcome to the main Module...'})
 
 @main.route('/data', methods=['POST'])
-def create_user():#POST
-    print(request.data)  # Print raw request data for debugging
+def create_user():
     try:
-        data = request.get_json()  # Attempt to parse the JSON
+        data = request.get_json()
         if data is None:
             return "Bad Request: No JSON received", 400
-        create_user_service(data)
-        return jsonify(data)
+        response, status_code = create_user_service(data)
+        return jsonify(response), status_code
     except Exception as e:
         print(f"Error parsing JSON: {e}")
         return "Bad Request: Invalid JSON", 400
     
 @main.route('/users/<int:device_id>', methods=['GET'])
 def get_user(device_id):
-    result = get_user_service(device_id)
-    return jsonify(message=result)
+    response, status_code = get_user_service(device_id)
+    return jsonify(response), status_code
