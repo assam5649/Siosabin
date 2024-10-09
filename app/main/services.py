@@ -1,7 +1,6 @@
 import mysql.connector
 from mysql.connector import Error, IntegrityError
 
-
 def create_user_service(data):
     try:
         config = mysql.connector.connect(
@@ -51,7 +50,6 @@ def get_user_service(device_id):
         cur = config.cursor()
 
         cur.execute("SELECT * FROM data WHERE device_id = %s ORDER BY id DESC LIMIT 1", (device_id,))
-
         
         cur.statement
         result = cur.fetchone()

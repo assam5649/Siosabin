@@ -24,7 +24,7 @@ def register_service(data):
             (%s, %s)"""
         
         cur.execute(insert_user_query, (data['name'], hashed_password))
-        config.commit()  # トランザクションをコミット
+        config.commit()
 
         return {'message': 'Register successful'}, 200
     

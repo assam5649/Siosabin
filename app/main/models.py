@@ -27,7 +27,6 @@ def data():
         """
         
         cursor.execute(create_data_query)
-
         
         insert_data_query = """
         INSERT INTO data

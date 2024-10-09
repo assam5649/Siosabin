@@ -14,6 +14,7 @@ def register():
             return "Bad Request: No JSON received", 400
         response, status_code = register_service(data)
         return (jsonify(response)), status_code
+        
     except Exception as e:
         print(f"Error parsing JSON: {e}")
         return "Bad Request: Invalid JSON", 400
@@ -26,6 +27,7 @@ def login():
             return "Bad Request: No JSON received", 400
         response, status_code = login_service(data)
         return (jsonify(response)), status_code
+
     except Exception as e:
         print(f"Error parsing JSON: {e}")
         return "Bad Request: Invalid JSON", 400    
