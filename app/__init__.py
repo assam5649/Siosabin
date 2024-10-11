@@ -15,9 +15,6 @@ def create_app():
     from .auth import models
     models.user()
 
-    from .predict import predict as predict_blueprint
-    app.register_blueprint(predict_blueprint, url_prefix='/predict')
-
     from .predict import models
     models.features()
 

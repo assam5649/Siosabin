@@ -20,12 +20,14 @@ def features():
         create_features_query = """
         CREATE TABLE IF NOT EXISTS features(
             id INT PRIMARY KEY AUTO_INCREMENT,
-            max_temp FLOAT,
-            min_temp FLOAT,
-            ave_temp FLOAT,
-            ave_humidity INT,
-            ave_windvelocity FLOAT,
-            max_windvelocity FLOAT
+            year INT,
+            month INT,
+            hour INT,
+            percentageHumidity INT,
+            windVelocity FLOAT,
+            temperature FLOAT,
+            precipitation FLOAT,
+            sushineDuraction FLOAT
         );
         """
         cursor.execute(create_features_query)
@@ -45,9 +47,9 @@ def features():
 
         insert_features_query = """
         INSERT INTO features
-            (id, max_temp, min_temp, ave_temp, ave_humidity, ave_windvelocity, max_windvelocity)
+        (year, month, hour, percentageHumidity, windVelocity, temperature, precipitation, sushineDuraction)
         VALUES
-            (1, 25.1, 22.0, 23.2, 80, 2.4, 2.6);"""
+        (2024, 8, 5, 87, 4.7, 29.2, 0, 0);"""
 
         cursor.execute(insert_features_query)
         cnx.commit()
