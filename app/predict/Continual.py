@@ -171,4 +171,4 @@ for i in range(epoch):
     train_loss_list.append(batch_train_loss)
     test_loss_list.append(batch_test_loss)
 
-torch.save(net.state_dict(), 'model.pth')
+torch.save(net.state_dict(), 'model_after_LOO_CV.pth')
