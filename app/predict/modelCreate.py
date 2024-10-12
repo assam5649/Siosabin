@@ -150,7 +150,7 @@ for i in range(epoch):
     test_loss_list.append(batch_test_loss)
 
 
-target_avg_loss = 0.65  # 目標平均損失
+target_avg_loss = 0.4  # 目標平均損失
 avg_loss = sum(test_loss_list) / len(test_loss_list)
 if avg_loss < target_avg_loss:
     save_path = os.path.join(save_directory, 'model_after_LOO_CV.pth')
@@ -172,16 +172,17 @@ if avg_loss < target_avg_loss:
 else:
     print(f'avg: {avg_loss}')
 
-plt.figure()
-plt.title('Train and Test Loss')
-plt.xlabel('Epoch')
-plt.ylabel('Loss')
-plt.plot(range(1, epoch+1), train_loss_list, color='blue',
-         linestyle='-', label='Train_Loss')
-plt.plot(range(1, epoch+1), test_loss_list, color='red',
-         linestyle='--', label='Test_Loss')
-plt.legend()
-plt.show()
+# plt.figure()
+# plt.title('Train and Test Loss')
+# plt.xlabel('Epoch')
+# plt.ylabel('Loss')
+# plt.plot(range(1, epoch+1), train_loss_list, color='blue',
+#          linestyle='-', label='Train_Loss')
+# plt.plot(range(1, epoch+1), test_loss_list, color='red',
+#          linestyle='--', label='Test_Loss')
+# plt.legend()
+# plt.show()
+# plt.savefig('plot.png')
 
 net.eval()
 with torch.no_grad():
