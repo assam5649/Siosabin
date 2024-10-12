@@ -24,6 +24,8 @@ def connect():
     cur.statement
     latest_features = cur.fetchone()
 
+    if latest_features is None:
+        raise ValueError("No features found in the database.")
     cur.close()
     config.close()
 
@@ -35,7 +37,7 @@ def connect():
     tempMax = np.array(tempMax).reshape(-1, 1)
     tempMin = np.array(tempMin).reshape(-1, 1)
 
-    save_directory = "models"
+    save_directory = "./app/predict/models"
     
     save_path = os.path.join(save_directory, 'scaler_label.joblib')
     scaler_label = joblib.load(save_path)
@@ -49,9 +51,9 @@ def connect():
     save_path = os.path.join(save_directory, 'scaler_precipitation.joblib')
     scaler_precipitation = joblib.load(save_path)
 
-    tempMax = scaler_tempMax.fit_transform(tempMax)
-    tempMin = scaler_tempMin.fit_transform(tempMin)
-    precipitation = scaler_precipitation.fit_transform(precipitation)
+    tempMax = scaler_tempMax.transform(tempMax)
+    tempMin = scaler_tempMin.transform(tempMin)
+    precipitation = scaler_precipitation.transform(precipitation)
 
     months = np.array(latest_features[2])
     days = np.array(latest_features[3])
@@ -61,12 +63,12 @@ def connect():
     precipitation = np.array(precipitation)
 
     data = np.column_stack([months, days, hour, tempMax, tempMin, precipitation])
-    data = data.reshape(-1, D_in)
+    forecast = data.reshape(-1, D_in)
 
     # latest_features = np.expand_dims(latest_features, axis=0)
 
     # data = np.append(data, latest_features, axis=0)
 
-    forecast = torch.tensor(data, dtype=torch.float32)
+    # forecast = torch.tensor(data, dtype=torch.float32)
 
     return forecast
