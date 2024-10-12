@@ -22,12 +22,11 @@ def features():
             id INT PRIMARY KEY AUTO_INCREMENT,
             year INT,
             month INT,
+            day INT,
             hour INT,
-            percentageHumidity INT,
-            windVelocity FLOAT,
-            temperature FLOAT,
-            precipitation FLOAT,
-            sushineDuraction FLOAT
+            precipitation INT,
+            tempMax FLOAT,
+            tempMin FLOAT
         );
         """
         cursor.execute(create_features_query)
@@ -37,7 +36,7 @@ def features():
         CREATE TABLE IF NOT EXISTS target(
             id INT PRIMARY KEY AUTO_INCREMENT,
             data_id INT,
-            future_type ENUM('day', 'hour'),
+            future_type ENUM('five', 'fifteen'),
             future_offset INT,
             future_value FLOAT,
             FOREIGN KEY (data_id) REFERENCES data(id)
@@ -47,9 +46,9 @@ def features():
 
         insert_features_query = """
         INSERT INTO features
-        (year, month, hour, percentageHumidity, windVelocity, temperature, precipitation, sushineDuraction)
+        (year, month, day, hour, precipitation, tempMax, tempMin)
         VALUES
-        (2024, 8, 5, 87, 4.7, 29.2, 0, 0);"""
+        (2024, 8, 22, 5, 1, 26, 31);"""
 
         cursor.execute(insert_features_query)
         cnx.commit()
