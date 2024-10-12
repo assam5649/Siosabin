@@ -1,5 +1,5 @@
 # ベースイメージの指定
-FROM python:3.11-slim
+FROM python:3.8.20
 
 RUN apt-get update && apt-get install -y cron
 
@@ -13,7 +13,7 @@ COPY requirements.txt .
 RUN pip install -r requirements.txt
 
 # スクリプトをコンテナにコピー
-COPY get.py /usr/local/bin/get.py
+COPY entry.py /usr/local/bin/entry.py
 
 # cronジョブを設定
 RUN echo "0 6,18 * * * python /usr/local/bin/get.py >> /var/log/cron.log 2>&1" > /etc/cron.d/my-cron
