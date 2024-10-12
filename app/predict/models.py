@@ -35,11 +35,8 @@ def features():
         create_target_query = """
         CREATE TABLE IF NOT EXISTS target(
             id INT PRIMARY KEY AUTO_INCREMENT,
-            data_id INT,
-            future_type ENUM('five', 'fifteen'),
             future_offset INT,
-            future_value FLOAT,
-            FOREIGN KEY (data_id) REFERENCES data(id)
+            future_value FLOAT
         );
         """ 
         cursor.execute(create_target_query)
@@ -55,9 +52,9 @@ def features():
 
         insert_target_query = """
         INSERT INTO target
-        (data_id, future_type, future_offset, future_value)
+        (future_offset, future_value)
         VALUES
-        (1, 'day', 1, 23.45);"""
+        (5, 23.45);"""
         
         cursor.execute(insert_target_query)
         cnx.commit()
