@@ -41,5 +41,45 @@ def insert_features(forecast):
         if config:
             config.close()
 
-def save_target(target):
-    pass
+def save_target(hour, target):
+    try:
+        config = mysql.connector.connect(
+            host='mysql-container',
+            port='3306',
+            user='root',
+            password='pass',
+            database='db'
+        )
+
+        config.ping(reconnect=True)
+
+        cur = config.cursor()
+
+        insert_target_query = """
+        INSERT INTO target
+        (future_offset, future_value)
+        VALUES
+        (%s, %s);"""
+
+        if hour == 5.0:
+            hour = 17
+        elif hour == 17.0:
+            hour = 5
+
+        cur.execute(insert_target_query, (hour, target))
+
+        config.commit()
+    
+    except IntegrityError as e:
+        print(f"Integrity error occurred: {e}")
+        return {'message': 'Database error occurred'}
+
+    except Error as e:
+        print(f"Error: {e}")
+        return {'message': 'Database error occurred', 'error': str(e)}
+
+    finally:
+        if cur:
+            cur.close()
+        if config:
+            config.close()
