@@ -8,37 +8,24 @@ from torch.utils.data import TensorDataset, DataLoader
 from torch import nn
 import torch.nn.functional as F
 from torch import optim
-import mysql.connector
-from mysql.connector import Error, IntegrityError
+import datetime
+import os
+import joblib
+from .utils import connect, salinity
 
-def update_model():
-    D_in = 7
-    H = 60
+def update_model(forecast, salinity_data):
+    D_in = 6
+    H = 200
     D_out = 1
-    epoch = 50
+    epoch = 100
 
-    config = mysql.connector.connect(
-        host='mysql-container',
-        port='3306',
-        user='root',
-        password='pass',
-        database='db'
-    )
-
-    config.ping(reconnect=True)
-
-    cur = config.cursor()
-
-    cur.execute("SELECT * FROM features ORDER BY id DESC LIMIT 1")
-    cur.statement
-    latest_features = cur.fetchone()
-
-    cur.close()
-    config.close()
-
-    Dataset = pd.read_csv('sensor_data.csv')
+    load_directory = "./app/predict"
+    
+    load_path = os.path.join(load_directory, 'sensor_data.csv')
+    Dataset = pd.read_csv(load_path)
     # Weather = pd.read_csv('NAHAdata.csv', encoding='ISO-8859-1')
-    df = pd.read_csv('NAHAdata.csv', parse_dates=['Date'])
+    load_path = os.path.join(load_directory, 'NAHAdata.csv')
+    df = pd.read_csv(load_path, parse_dates=['Date'])
 
     #Dataset Index(['created_at', 'entry_id', 'field1', 'latitude', 'longitude','elevation', 'status'],dtype='object')
 
@@ -53,12 +40,18 @@ def update_model():
     label = Dataset['field1'].values.reshape(-1, 1)
     # 5 hour and 17 hour select
     UseWeather = df[(df['Date'].dt.time == pd.to_datetime('05:00:00').time()) | (df['Date'].dt.time == pd.to_datetime('17:00:00').time())]
+    UseWeather = UseWeather.copy()
+    UseWeather.loc[:, 'hour'] = UseWeather['Date'].dt.hour  # .locを使用
 
-    scaler_label = StandardScaler()
+    # hourを変数に格納
+    hours = UseWeather['hour'].values  # hourの値を変数に格納
+
     tempMax = UseWeather['Max'].values.reshape(-1, 1)
     tempMin = UseWeather['Min'].values.reshape(-1, 1)
-    precipitation = UseWeather['precipitation'].values.reshape(-1, 1)
+    precipitation = UseWeather['Precipitation'].values.reshape(-1, 1)
 
+    save_directory = "./app/predict/models"
+    
     save_path = os.path.join(save_directory, 'scaler_label.joblib')
     scaler_label = joblib.load(save_path)
 
@@ -71,26 +64,25 @@ def update_model():
     save_path = os.path.join(save_directory, 'scaler_precipitation.joblib')
     scaler_precipitation = joblib.load(save_path)
 
-    label = scaler_label.fit_transform(label)
-    tempMax = scaler_tempMax.fit_transform(tempMax)
-    tempMin = scaler_tempMin.fit_transform(tempMin)
-    precipitation = scaler_precipitation.fit_transform(precipitation)
+    tempMax = scaler_tempMax.transform(tempMax)
+    tempMin = scaler_tempMin.transform(tempMin)
+    precipitation = scaler_precipitation.transform(precipitation)
 
     label = np.array(label)
     months = np.array(months)
     days = np.array(days)
+    hours = np.array(hours)
     tempMax = np.array(tempMax)
     tempMin = np.array(tempMin)
     precipitation = np.array(precipitation)
+    salinity_data = np.array(salinity_data)
 
-    data = np.column_stack([months, days, percentageHumidity, windVelocity, temperature, precipitation, sushineDuraction])
+    data = np.column_stack([months, days, hours, tempMax, tempMin, precipitation])
     data = data.reshape(-1, D_in)
+    salinity_data = np.expand_dims(salinity_data, axis=0)
 
-    latest_features = np.expand_dims(latest_features, axis=0)
-    latest_salinity = np.expand_dims(latest_salinity, axis=0)
-
-    data = np.append(data, latest_features, axis=0)
-    label = np.append(label, latest_salinity, axis=0)
+    data = np.append(data, forecast, axis=0)
+    label = np.append(label, salinity_data, axis=0)
 
     data = torch.tensor(data, dtype=torch.float32)
     label = torch.tensor(label, dtype=torch.float32)
@@ -107,22 +99,22 @@ def update_model():
             output = self.linear(output)
             return output
 
-
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     net = Net(D_in, H, D_out).to(device)
-    print("Device: {}".format(device))
 
-    save_path = os.path.join(save_directory, 'model_after_LOO_CV.pth')
-    net.load_state_dict(torch.load(save_path))
+    print("Device: {}".format(device))
 
     criterion = nn.MSELoss()
 
-    optimizer = optim.Adam(net.parameters(), lr=0.001)
+    optimizer = optim.Adam(net.parameters(), lr=0.05)
 
     train_loss_list = []
     test_loss_list = []
 
     loo = LeaveOneOut()
+
+    save_directory = 'models'
+    os.makedirs(save_directory, exist_ok=True)
 
     for i in range(epoch):
         print('--------------------------------')
@@ -170,4 +162,28 @@ def update_model():
         train_loss_list.append(batch_train_loss)
         test_loss_list.append(batch_test_loss)
 
-    torch.save(net.state_dict(), 'model_after_LOO_CV.pth')
+    avg_loss = sum(test_loss_list) / len(test_loss_list)
+    print(avg_loss)
+    target_avg_loss = 0.8  # 最低目標平均損失
+    avg_loss = sum(test_loss_list) / len(test_loss_list)
+    if avg_loss < target_avg_loss:
+        save_path = os.path.join(save_directory, 'model_after_LOO_CV.pth')
+        torch.save(net.state_dict(), save_path)
+
+        save_path = os.path.join(save_directory, 'scaler_label.joblib')
+        joblib.dump(scaler_label, save_path)
+
+        save_path = os.path.join(save_directory, 'scaler_tempMax.joblib')
+        joblib.dump(scaler_tempMax, save_path)
+
+        save_path = os.path.join(save_directory, 'scaler_tempMin.joblib')
+        joblib.dump(scaler_tempMin, save_path)
+
+        save_path = os.path.join(save_directory, 'scaler_precipitation.joblib')
+        joblib.dump(scaler_precipitation, save_path)
+
+        print(f'Model saved at epoch {epoch} with average loss: {avg_loss}')
+    else:
+        if count < 10:
+            return 1
+        update_model(connect(), salinity())
