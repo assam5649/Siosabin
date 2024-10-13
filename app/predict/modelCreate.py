@@ -1,6 +1,6 @@
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 from sklearn.model_selection import LeaveOneOut
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import mean_absolute_error
@@ -152,37 +152,26 @@ for i in range(epoch):
 
 target_avg_loss = 0.4  # 目標平均損失
 avg_loss = sum(test_loss_list) / len(test_loss_list)
-if avg_loss < target_avg_loss:
-    save_path = os.path.join(save_directory, 'model_after_LOO_CV.pth')
-    torch.save(net.state_dict(), save_path)
+print(avg_loss)
+# if avg_loss < target_avg_loss:
+#     save_path = os.path.join(save_directory, 'model_after_LOO_CV.pth')
+#     torch.save(net.state_dict(), save_path)
 
-    save_path = os.path.join(save_directory, 'scaler_label.joblib')
-    joblib.dump(scaler_label, save_path)
+#     save_path = os.path.join(save_directory, 'scaler_label.joblib')
+#     joblib.dump(scaler_label, save_path)
 
-    save_path = os.path.join(save_directory, 'scaler_tempMax.joblib')
-    joblib.dump(scaler_tempMax, save_path)
+#     save_path = os.path.join(save_directory, 'scaler_tempMax.joblib')
+#     joblib.dump(scaler_tempMax, save_path)
 
-    save_path = os.path.join(save_directory, 'scaler_tempMin.joblib')
-    joblib.dump(scaler_tempMin, save_path)
+#     save_path = os.path.join(save_directory, 'scaler_tempMin.joblib')
+#     joblib.dump(scaler_tempMin, save_path)
 
-    save_path = os.path.join(save_directory, 'scaler_precipitation.joblib')
-    joblib.dump(scaler_precipitation, save_path)
+#     save_path = os.path.join(save_directory, 'scaler_precipitation.joblib')
+#     joblib.dump(scaler_precipitation, save_path)
 
-    print(f'Model saved at epoch {epoch} with average loss: {avg_loss}')
-else:
-    print(f'avg: {avg_loss}')
-
-# plt.figure()
-# plt.title('Train and Test Loss')
-# plt.xlabel('Epoch')
-# plt.ylabel('Loss')
-# plt.plot(range(1, epoch+1), train_loss_list, color='blue',
-#          linestyle='-', label='Train_Loss')
-# plt.plot(range(1, epoch+1), test_loss_list, color='red',
-#          linestyle='--', label='Test_Loss')
-# plt.legend()
-# plt.show()
-# plt.savefig('plot.png')
+#     print(f'Model saved at epoch {epoch} with average loss: {avg_loss}')
+# else:
+#     print(f'avg: {avg_loss}')
 
 net.eval()
 with torch.no_grad():
@@ -213,16 +202,15 @@ print("MAE: {:.3f}".format(mae))
 print(true_ma)
 print(pred_ma)
 
-# date = sensor_date.reshape(-1, 1)
-
+#####################-- USE GUI --#####################
 # plt.figure()
-# plt.title('pred view')
-# plt.xlabel('Date')
-# plt.ylabel('label')
-# plt.plot(date, true_ma, color='dodgerblue',
-#          linestyle='-', label='true')
-# plt.plot(date, pred_ma, color='red', 
-#          linestyle='--', label='pred')
+# plt.title('Train and Test Loss')
+# plt.xlabel('Epoch')
+# plt.ylabel('Loss')
+# plt.plot(range(1, epoch+1), train_loss_list, color='blue',
+#          linestyle='-', label='Train_Loss')
+# plt.plot(range(1, epoch+1), test_loss_list, color='red',
+#          linestyle='--', label='Test_Loss')
 # plt.legend()
-# plt.xticks(rotation=30)
 # plt.show()
+# plt.savefig('plot.png')
