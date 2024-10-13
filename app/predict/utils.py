@@ -72,3 +72,27 @@ def connect():
     # forecast = torch.tensor(data, dtype=torch.float32)
 
     return forecast
+
+def salinity():
+    config = mysql.connector.connect(
+        host='mysql-container',
+        port='3306',
+        user='root',
+        password='pass',
+        database='db'
+    )
+
+    config.ping(reconnect=True)
+
+    cur = config.cursor()
+
+    cur.execute("SELECT salinity FROM data ORDER BY id DESC LIMIT 1")
+    cur.statement
+    salinity_data = cur.fetchone()
+
+    if salinity_data is None:
+        raise ValueError("No features found in the database.")
+    cur.close()
+    config.close()
+
+    return salinity_data
