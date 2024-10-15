@@ -38,7 +38,7 @@ def features():
         CREATE TABLE IF NOT EXISTS target(
             id INT PRIMARY KEY AUTO_INCREMENT,
             future_offset INT,
-            future_value FLOAT,
+            future_value INT,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
         );
@@ -58,7 +58,7 @@ def features():
         INSERT INTO target
         (future_offset, future_value)
         VALUES
-        (5, 0.4);"""
+        (5, 1);"""
         
         cursor.execute(insert_target_query)
         cnx.commit()
