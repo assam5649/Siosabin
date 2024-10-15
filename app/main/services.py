@@ -1,5 +1,6 @@
 import mysql.connector
 from mysql.connector import Error, IntegrityError
+from .utils import categorize
 
 def create_user_service(data):
     try:
@@ -14,6 +15,8 @@ def create_user_service(data):
         config.ping(reconnect=True)
 
         cur = config.cursor()
+
+        category = categorize(data[salinity])
 
         cur.execute("INSERT INTO data (device_id, location, in_tank, out_tank, salinity) VALUES (%s, %s, %s, %s, %s)", (data['device_id'], data['location'], data['in_tank'], data['out_tank'], data['salinity']))
 
