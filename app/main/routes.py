@@ -31,4 +31,5 @@ def get_location():
 @main.route('/salinity', methods=['GET'])
 def get_salinity():
     response, status_code = get_salinity_service()
+    response = [[float(salinity)] for salinity, value in response if float(value) == 0.0]
     return jsonify(response), status_code
