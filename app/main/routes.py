@@ -1,6 +1,6 @@
 from flask import jsonify, request
 from . import main
-from .services import create_user_service, get_user_service
+from .services import create_user_service, get_user_service, get_location_service, get_salinity_service
 
 @main.route('/')
 def index():
@@ -21,4 +21,14 @@ def create_user():
 @main.route('/users/<int:device_id>', methods=['GET'])
 def get_user(device_id):
     response, status_code = get_user_service(device_id)
+    return jsonify(response), status_code
+
+@main.route('/location', methods=['GET'])
+def get_location():
+    response, status_code = get_location_service()
+    return jsonify(response), status_code
+
+@main.route('/salinity', methods=['GET'])
+def get_salinity():
+    response, status_code = get_salinity_service()
     return jsonify(response), status_code
