@@ -3,3 +3,4 @@ app/main/__pycache__
 app/auth/__pycache__
 app/predict/__pycache__
 .venv/*
+app/predict/models/*
