@@ -22,7 +22,9 @@ def data():
             location VARCHAR(255),
             in_tank INT,
             out_tank INT,
-            salinity FLOAT
+            salinity INT,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
         );
         """
         
