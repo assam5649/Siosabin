@@ -32,7 +32,7 @@ def data():
         INSERT INTO data
         (device_id, location, in_tank, out_tank, salinity)
         VALUES
-        (11, 'POINT(137.10 35.20)', 70, 30, 0.5);"""
+        (11, 'POINT(137.10 35.20)', 70, 30, 3);"""
 
         cursor.execute(insert_data_query)
         cnx.commit()
