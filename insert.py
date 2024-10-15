@@ -84,11 +84,18 @@ def initialize_service():
         VALUES
         (5, 'POINT(50.00 50.00)', 60, 40, 1);"""
 
+        initialize_query6 = """
+        INSERT INTO data
+        (device_id, location, in_tank, out_tank, salinity)
+        VALUES
+        (6, 'POINT(60.00 60.00)', 50, 50, 3);"""
+
         cur.execute(initialize_query1)
         cur.execute(initialize_query2)
         cur.execute(initialize_query3)
         cur.execute(initialize_query4)
         cur.execute(initialize_query5)
+        cur.execute(initialize_query6)
         config.commit()
 
         # initialize features
