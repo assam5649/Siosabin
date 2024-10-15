@@ -19,9 +19,9 @@ def insert_features(forecast):
         
         insert_features_query = """
         INSERT INTO features
-        (year, month, hour, precipitation, tempMax, tempsMin)
+        (year, month, day, hour, precipitation, tempMax, tempMin)
         VALUES
-        (%s, %s, %s, %s, %s, %s);"""
+        (%s, %s, %s, %s, %s, %s, %s);"""
 
         cur.execute(insert_features_query, (forecast['year'], forecast['month'], forecast['day'], forecast['hour'], forecast['precipitation'], forecast['tempMax'], forecast['tempMin']))
 
@@ -65,6 +65,8 @@ def save_target(hour, target):
             hour = 17
         elif hour == 17.0:
             hour = 5
+        else:
+            return {'message': 'hour is not five or fifteen'}
 
         cur.execute(insert_target_query, (hour, target))
 
