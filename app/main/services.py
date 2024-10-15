@@ -75,3 +75,85 @@ def get_user_service(device_id):
             cur.close()
         if config:
             config.close()
+
+def get_location_service():
+    try:
+        config = mysql.connector.connect(
+            host='mysql-container',
+            port='3306',
+            user='root',
+            password='pass',
+            database='db'
+        )
+
+        config.ping(reconnect=True)
+
+        cur = config.cursor()
+
+        cur.execute("SELECT device_id, MIN(location) AS location FROM data GROUP BY device_id;")
+        
+        cur.statement
+        result = cur.fetchall()
+
+        return result, 200
+    
+    except IntegrityError as e:
+        print(f"Integrity error occurred: {e}")
+        return {'message': 'User already exists'}, 409
+    
+    except Error as e:
+        print(f"Error: {e}")
+        return {'message': 'Database error occurred', 'error': str(e)}, 500
+        
+    finally:
+        if cur:
+            cur.close()
+        if config:
+            config.close()
+
+def get_salinity_service():
+    try:
+        config = mysql.connector.connect(
+            host='mysql-container',
+            port='3306',
+            user='root',
+            password='pass',
+            database='db'
+        )
+
+        config.ping(reconnect=True)
+
+        cur = config.cursor()
+
+        get_salinity_query = """
+        SELECT
+            salinity,
+            FLOOR(TIMESTAMPDIFF(HOUR, created_at, NOW()) / 5) AS time_group
+        FROM
+            data
+        WHERE
+            created_at >= NOW() - INTERVAL 25 HOUR
+        ORDER BY
+            time_group;"""
+
+        cur.execute(get_salinity_query)
+        
+        cur.statement
+        result = cur.fetchall()
+        filtered_data = list(filter(lambda item: item[1] != "0", data))
+
+        return filtered_data, 200
+    
+    except IntegrityError as e:
+        print(f"Integrity error occurred: {e}")
+        return {'message': 'User already exists'}, 409
+    
+    except Error as e:
+        print(f"Error: {e}")
+        return {'message': 'Database error occurred', 'error': str(e)}, 500
+        
+    finally:
+        if cur:
+            cur.close()
+        if config:
+            config.close()
