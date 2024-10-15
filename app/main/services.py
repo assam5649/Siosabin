@@ -1,6 +1,7 @@
 import mysql.connector
 from mysql.connector import Error, IntegrityError
 from .utils import categorize
+import numpy as np
 
 def create_user_service(data):
     try:
@@ -140,9 +141,10 @@ def get_salinity_service():
         
         cur.statement
         result = cur.fetchall()
-        filtered_data = list(filter(lambda item: item[1] != "0", data))
-
-        return filtered_data, 200
+        result = np.array(result)
+        result.reshape(-1)
+        
+        return result, 200
     
     except IntegrityError as e:
         print(f"Integrity error occurred: {e}")
