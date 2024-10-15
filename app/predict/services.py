@@ -2,6 +2,7 @@ import mysql.connector
 from mysql.connector import Error, IntegrityError
 import torch
 import numpy as np
+from .utils import categorize
 
 def insert_features(forecast):
     try:
@@ -65,10 +66,14 @@ def save_target(hour, target):
             hour = 17
         elif hour == 17.0:
             hour = 5
+        elif hour == 11.0:
+            hour = 17
         else:
             return {'message': 'hour is not five or fifteen'}
+        
+        category = categorize(target)
 
-        cur.execute(insert_target_query, (hour, target))
+        cur.execute(insert_target_query, (hour, category))
 
         config.commit()
     
