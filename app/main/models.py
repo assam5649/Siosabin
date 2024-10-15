@@ -27,15 +27,6 @@ def data():
         """
         
         cursor.execute(create_data_query)
-        
-        insert_data_query = """
-        INSERT INTO data
-        (device_id, location, in_tank, out_tank, salinity)
-        VALUES
-        (11, 'POINT(137.10 35.20)', 70, 30, 3);"""
-
-        cursor.execute(insert_data_query)
-        cnx.commit()
 
     except mysql.connector.Error as err:
         if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:

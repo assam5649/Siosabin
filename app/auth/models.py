@@ -27,15 +27,6 @@ def user():
 
         cursor.execute(create_users_query)
 
-        insert_users_query = """
-        INSERT INTO users 
-        (name, password)
-        VALUES 
-        ('a', 'aPass');"""
-
-        cursor.execute(insert_users_query)
-        cnx.commit()
-        
     except mysql.connector.Error as err:
         if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
             print("ユーザー名またはパスワードが間違っています。")
