@@ -113,7 +113,7 @@ def update_model(forecast, salinity_data):
 
     loo = LeaveOneOut()
 
-    save_directory = 'models'
+    save_directory = 'app/predict/models'
     os.makedirs(save_directory, exist_ok=True)
 
     for i in range(epoch):
