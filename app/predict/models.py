@@ -26,7 +26,9 @@ def features():
             hour INT,
             precipitation INT,
             tempMax FLOAT,
-            tempMin FLOAT
+            tempMin FLOAT,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
         );
         """
         cursor.execute(create_features_query)
@@ -36,7 +38,9 @@ def features():
         CREATE TABLE IF NOT EXISTS target(
             id INT PRIMARY KEY AUTO_INCREMENT,
             future_offset INT,
-            future_value FLOAT
+            future_value FLOAT,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
         );
         """ 
         cursor.execute(create_target_query)
@@ -54,7 +58,7 @@ def features():
         INSERT INTO target
         (future_offset, future_value)
         VALUES
-        (5, 23.45);"""
+        (5, 0.4);"""
         
         cursor.execute(insert_target_query)
         cnx.commit()
