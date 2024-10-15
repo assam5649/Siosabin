@@ -106,7 +106,7 @@ def update_model(forecast, salinity_data):
 
     criterion = nn.MSELoss()
 
-    optimizer = optim.Adam(net.parameters(), lr=0.05)
+    optimizer = optim.Adam(net.parameters(), lr=0.02)
 
     train_loss_list = []
     test_loss_list = []
