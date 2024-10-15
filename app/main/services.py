@@ -52,7 +52,7 @@ def get_user_service(device_id):
 
         cur = config.cursor()
 
-        cur.execute("SELECT * FROM data WHERE device_id = %s ORDER BY id DESC LIMIT 1", (device_id,))
+        cur.execute("SELECT * FROM data WHERE device_id = %s ORDER BY id DESC LIMIT 4", (device_id,))
         
         cur.statement
         result = cur.fetchone()
