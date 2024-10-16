@@ -13,4 +13,5 @@ updateModel(connect(), salinity())
 updateModelDays(connectDays(), salinity())
 
 predict(connect())
-predictDays(connectDaysPredict())
+for i in connectDaysPredict():
+    predictDays(i)
