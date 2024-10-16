@@ -15,43 +15,43 @@ def initialize_service():
 
         cur = config.cursor()
 
-        # initialize users
-        initialize_query1 = """
-        INSERT INTO users 
-        (name, password)
-        VALUES 
-        ('a', 'aPass');"""
+        # # initialize users
+        # initialize_query1 = """
+        # INSERT INTO users 
+        # (name, password)
+        # VALUES 
+        # ('a', 'aPass');"""
 
-        initialize_query2 = """
-        INSERT INTO users 
-        (name, password)
-        VALUES 
-        ('b', 'bPass');"""
+        # initialize_query2 = """
+        # INSERT INTO users 
+        # (name, password)
+        # VALUES 
+        # ('b', 'bPass');"""
 
-        initialize_query3 = """
-        INSERT INTO users 
-        (name, password)
-        VALUES 
-        ('c', 'cPass');"""
+        # initialize_query3 = """
+        # INSERT INTO users 
+        # (name, password)
+        # VALUES 
+        # ('c', 'cPass');"""
 
-        initialize_query4 = """
-        INSERT INTO users 
-        (name, password)
-        VALUES 
-        ('d', 'dPass');"""
+        # initialize_query4 = """
+        # INSERT INTO users 
+        # (name, password)
+        # VALUES 
+        # ('d', 'dPass');"""
 
-        initialize_query5 = """
-        INSERT INTO users 
-        (name, password)
-        VALUES 
-        ('e', 'ePass');"""
+        # initialize_query5 = """
+        # INSERT INTO users 
+        # (name, password)
+        # VALUES 
+        # ('e', 'ePass');"""
 
-        cur.execute(initialize_query1)
-        cur.execute(initialize_query2)
-        cur.execute(initialize_query3)
-        cur.execute(initialize_query4)
-        cur.execute(initialize_query5)
-        config.commit()
+        # cur.execute(initialize_query1)
+        # cur.execute(initialize_query2)
+        # cur.execute(initialize_query3)
+        # cur.execute(initialize_query4)
+        # cur.execute(initialize_query5)
+        # config.commit()
 
         # initialize data
         initialize_query1 = """
@@ -98,81 +98,81 @@ def initialize_service():
         cur.execute(initialize_query6)
         config.commit()
 
-        # initialize features
-        initialize_query1 = """
-        INSERT INTO features
-        (year, month, day, hour, precipitation, tempMax, tempMin)
-        VALUES
-        (2024, 8, 22, 5, 1, 30, 25);"""
+        # # initialize features
+        # initialize_query1 = """
+        # INSERT INTO featuresDays
+        # (year, month, day, precipitation, tempMax, tempMin)
+        # VALUES
+        # (2024, 8, 22, 1, 30, 25);"""
 
-        initialize_query2 = """
-        INSERT INTO features
-        (year, month, day, hour, precipitation, tempMax, tempMin)
-        VALUES
-        (2024, 8, 22, 17, 1, 31, 26);"""
+        # initialize_query2 = """
+        # INSERT INTO featuresDays
+        # (year, month, day, precipitation, tempMax, tempMin)
+        # VALUES
+        # (2024, 8, 22, 1, 31, 26);"""
 
-        initialize_query3 = """
-        INSERT INTO features
-        (year, month, day, hour, precipitation, tempMax, tempMin)
-        VALUES
-        (2024, 8, 23, 5, 1, 32, 27);"""
+        # initialize_query3 = """
+        # INSERT INTO featuresDays
+        # (year, month, day, precipitation, tempMax, tempMin)
+        # VALUES
+        # (2024, 8, 23, 1, 32, 27);"""
 
-        initialize_query4 = """
-        INSERT INTO features
-        (year, month, day, hour, precipitation, tempMax, tempMin)
-        VALUES
-        (2024, 8, 23, 17, 1, 29, 24);"""
+        # initialize_query4 = """
+        # INSERT INTO featuresDays
+        # (year, month, day, precipitation, tempMax, tempMin)
+        # VALUES
+        # (2024, 8, 23, 1, 29, 24);"""
 
-        initialize_query5 = """
-        INSERT INTO features
-        (year, month, day, hour, precipitation, tempMax, tempMin)
-        VALUES
-        (2024, 8, 24, 5, 1, 28, 23);"""
+        # initialize_query5 = """
+        # INSERT INTO featuresDays
+        # (year, month, day, precipitation, tempMax, tempMin)
+        # VALUES
+        # (2024, 8, 24, 1, 28, 23);"""
 
-        cur.execute(initialize_query1)
-        cur.execute(initialize_query2)
-        cur.execute(initialize_query3)
-        cur.execute(initialize_query4)
-        cur.execute(initialize_query5)
-        config.commit()
+        # cur.execute(initialize_query1)
+        # cur.execute(initialize_query2)
+        # cur.execute(initialize_query3)
+        # cur.execute(initialize_query4)
+        # cur.execute(initialize_query5)
+        # config.commit()
 
-        # initialize target
-        initialize_query1 = """
-        INSERT INTO target
-        (future_offset, future_value)
-        VALUES
-        (5, 3);"""
+        # # initialize featuresDays
+        # initialize_query1 = """
+        # INSERT INTO features
+        # (year, month, day, hour, precipitation, tempMax, tempMin)
+        # VALUES
+        # (2024, 8, 22, 5, 1, 30, 25);"""
 
-        initialize_query2 = """
-        INSERT INTO target
-        (future_offset, future_value)
-        VALUES
-        (17, 4);"""
+        # initialize_query2 = """
+        # INSERT INTO features
+        # (year, month, day, hour, precipitation, tempMax, tempMin)
+        # VALUES
+        # (2024, 8, 23, 5, 1, 30, 25);"""
 
-        initialize_query3 = """
-        INSERT INTO target
-        (future_offset, future_value)
-        VALUES
-        (5, 5);"""
+        # initialize_query3 = """
+        # INSERT INTO features
+        # (year, month, day, hour, precipitation, tempMax, tempMin)
+        # VALUES
+        # (2024, 8, 23, 5, 1, 30, 25);"""
 
-        initialize_query4 = """
-        INSERT INTO target
-        (future_offset, future_value)
-        VALUES
-        (17, 2);"""
+        # initialize_query4 = """
+        # INSERT INTO features
+        # (year, month, day, hour, precipitation, tempMax, tempMin)
+        # VALUES
+        # (2024, 8, 23, 5, 1, 30, 25);"""
 
-        initialize_query5 = """
-        INSERT INTO target
-        (future_offset, future_value)
-        VALUES
-        (5, 1);"""
+        # initialize_query5 = """
+        # INSERT INTO features
+        # (year, month, day, hour, precipitation, tempMax, tempMin)
+        # VALUES
+        # (2024, 8, 23, 5, 1, 30, 25);"""
 
-        cur.execute(initialize_query1)
-        cur.execute(initialize_query2)
-        cur.execute(initialize_query3)
-        cur.execute(initialize_query4)
-        cur.execute(initialize_query5)
-        config.commit()
+        # cur.execute(initialize_query1)
+        # cur.execute(initialize_query2)
+        # cur.execute(initialize_query3)
+        # cur.execute(initialize_query4)
+        # cur.execute(initialize_query5)
+        # config.commit()
         
     
     except IntegrityError as e:
