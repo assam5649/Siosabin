@@ -13,7 +13,7 @@ import os
 import joblib
 from .utils import connect, salinity
 
-def update_model(forecast, salinity_data):
+def updateModel(forecast, salinity_data):
     D_in = 6
     H = 200
     D_out = 1
@@ -166,24 +166,24 @@ def update_model(forecast, salinity_data):
     print(avg_loss)
     target_avg_loss = 0.8  # 最低目標平均損失
     avg_loss = sum(test_loss_list) / len(test_loss_list)
-    if avg_loss < target_avg_loss:
-        save_path = os.path.join(save_directory, 'model_after_LOO_CV.pth')
-        torch.save(net.state_dict(), save_path)
+    # if avg_loss < target_avg_loss:
+    #     save_path = os.path.join(save_directory, 'model_after_LOO_CV.pth')
+    #     torch.save(net.state_dict(), save_path)
 
-        save_path = os.path.join(save_directory, 'scaler_label.joblib')
-        joblib.dump(scaler_label, save_path)
+    #     save_path = os.path.join(save_directory, 'scaler_label.joblib')
+    #     joblib.dump(scaler_label, save_path)
 
-        save_path = os.path.join(save_directory, 'scaler_tempMax.joblib')
-        joblib.dump(scaler_tempMax, save_path)
+    #     save_path = os.path.join(save_directory, 'scaler_tempMax.joblib')
+    #     joblib.dump(scaler_tempMax, save_path)
 
-        save_path = os.path.join(save_directory, 'scaler_tempMin.joblib')
-        joblib.dump(scaler_tempMin, save_path)
+    #     save_path = os.path.join(save_directory, 'scaler_tempMin.joblib')
+    #     joblib.dump(scaler_tempMin, save_path)
 
-        save_path = os.path.join(save_directory, 'scaler_precipitation.joblib')
-        joblib.dump(scaler_precipitation, save_path)
+    #     save_path = os.path.join(save_directory, 'scaler_precipitation.joblib')
+    #     joblib.dump(scaler_precipitation, save_path)
 
-        print(f'Model saved at epoch {epoch} with average loss: {avg_loss}')
-    else:
-        if count < 10:
-            return 1
-        update_model(connect(), salinity())
+    #     print(f'Model saved at epoch {epoch} with average loss: {avg_loss}')
+    # else:
+    #     if count < 10:
+    #         return 1
+    #     update_model(connect(), salinity())
