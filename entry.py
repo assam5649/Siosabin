@@ -1,10 +1,16 @@
-from app.predict.get import forecast
-from app.predict.services import insert_features
-from app.predict.utils import connect, salinity
+from app.predict.get import forecast, forecastDays
+from app.predict.services import insert_features, insert_featuresDays
+from app.predict.utils import connect, connectDays, connectDaysPredict, salinity
 from app.predict.predict import predict
-from app.predict.continual import update_model
+from app.predict.predictDays import predictDays
+from app.predict.continual import updateModel
+from app.predict.continualDays import updateModelDays
 
 insert_features(forecast())
-predict(connect())
+insert_featuresDays(forecastDays())
 
-update_model(connect(), salinity())
+updateModel(connect(), salinity())
+updateModelDays(connectDays(), salinity())
+
+predict(connect())
+predictDays(connectDaysPredict())
