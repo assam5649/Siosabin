@@ -148,14 +148,12 @@ def connectDaysPredict():
     data = []
     for i in range(len(latest_features)):
         data.append(np.column_stack([months[i], days[i], tempMax[i], tempMin[i], precipitation[i]]))
-    forecast = data.reshape(-1, D_in)
     # latest_features = np.expand_dims(latest_features, axis=0)
 
     # data = np.append(data, latest_features, axis=0)
 
     # forecast = torch.tensor(data, dtype=torch.float32)
-    print(forecast.shape)
-    return forecast
+    return data
 
 def connectDays():
     D_in = 5
