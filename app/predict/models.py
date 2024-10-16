@@ -31,9 +31,25 @@ def features():
         """
         cursor.execute(create_features_query)
 
+        create_featuresDays_query = """
+        CREATE TABLE IF NOT EXISTS featuresDays(
+            id INT PRIMARY KEY AUTO_INCREMENT,
+            year INT,
+            month INT,
+            day INT,
+            precipitation INT,
+            tempMax FLOAT,
+            tempMin FLOAT,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+        );
+        """
+        cursor.execute(create_featuresDays_query)
+
         create_target_query = """
         CREATE TABLE IF NOT EXISTS target(
             id INT PRIMARY KEY AUTO_INCREMENT,
+            period_unit ENUM('hour', 'day') NOT NULL,
             future_offset INT,
             future_value INT,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
