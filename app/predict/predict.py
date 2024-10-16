@@ -5,7 +5,7 @@ from mysql.connector import Error, IntegrityError
 import os
 import joblib
 import numpy as np
-from .services import save_target
+from .services import saveTarget, saveTargetDays
 
 def predict(forecast):
     D_in = 6
@@ -44,12 +44,11 @@ def predict(forecast):
     with torch.no_grad():
         prediction = net(input_data)
 
-    print("Predicted value defore inverse_transform:", prediction.item())
-
     prediction = np.array(prediction)
     prediction = scaler_label.inverse_transform(prediction.reshape(-1, 1))
 
     print("Predicted value:", prediction.item())
 
     hour = forecast[0][2]
-    save_target(hour, prediction.item())
+
+    saveTarget(int(hour), prediction.item())
