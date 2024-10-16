@@ -186,13 +186,51 @@ def salinity():
 
         cur = config.cursor()
 
-        cur.execute("SELECT * FROM target ORDER BY id DESC LIMIT 2")
+        cur.execute("SELECT * FROM target WHERE period_unit = 'hour' ORDER BY id DESC LIMIT 2")
         
         cur.statement
         result = cur.fetchall()
         
         if result is None:
-            return ({'message': 'device_id not found'}), 401
+            return ({'message': 'salinity not found'}), 401
+
+        return result, 200
+    
+    except IntegrityError as e:
+        print(f"Integrity error occurred: {e}")
+        return {'message': 'User already exists'}, 409
+    
+    except Error as e:
+        print(f"Error: {e}")
+        return {'message': 'Database error occurred', 'error': str(e)}, 500
+        
+    finally:
+        if cur:
+            cur.close()
+        if config:
+            config.close()
+
+def days_salinity():
+    try:
+        config = mysql.connector.connect(
+            host='mysql-container',
+            port='3306',
+            user='root',
+            password='pass',
+            database='db'
+        )
+
+        config.ping(reconnect=True)
+
+        cur = config.cursor()
+
+        cur.execute("SELECT * FROM target WHERE period_unit = 'day' ORDER BY id DESC LIMIT 6;")
+        
+        cur.statement
+        result = cur.fetchall()
+        
+        if result is None:
+            return ({'message': 'salinity not found'}), 401
 
         return result, 200
     
