@@ -1,7 +1,9 @@
 import mysql.connector
 from mysql.connector import Error, IntegrityError
-from .utils import categorize
+# from .utils import categorize
 import numpy as np
+import json
+from collections import defaultdict
 
 def create_user_service(data):
     try:
@@ -127,22 +129,28 @@ def get_salinity_service():
         cur = config.cursor()
 
         get_salinity_query = """
-        SELECT
-            salinity,
-            FLOOR(TIMESTAMPDIFF(HOUR, created_at, NOW()) / 5) AS time_group
-        FROM
-            data
-        WHERE
-            created_at >= NOW() - INTERVAL 25 HOUR
-        ORDER BY
-            time_group;"""
+        SELECT salinity, location,
+            CASE
+                WHEN created_at >= NOW() - INTERVAL 5 HOUR THEN 'Group 1'
+                WHEN created_at >= NOW() - INTERVAL 10 HOUR THEN 'Group 2'
+                WHEN created_at >= NOW() - INTERVAL 15 HOUR THEN 'Group 3'
+                WHEN created_at >= NOW() - INTERVAL 20 HOUR THEN 'Group 4'
+                WHEN created_at >= NOW() - INTERVAL 25 HOUR THEN 'Group 5'
+            END AS time_group
+        FROM data
+        WHERE created_at >= NOW() - INTERVAL 25 HOUR
+        ORDER BY id DESC;"""
 
         cur.execute(get_salinity_query)
-        
-        cur.statement
-        result = cur.fetchall()
-        result = np.array(result)
-        result.reshape(-1)
+
+        data = cur.fetchall()
+
+        grouped_data = defaultdict(list)
+
+        for entry in data:
+            grouped_data[entry[2]].append(entry)
+
+        result = [grouped_data[f"Group {i+1}"] for i in range(5)]
         
         return result, 200
     
@@ -159,3 +167,5 @@ def get_salinity_service():
             cur.close()
         if config:
             config.close()
+
+print(get_salinity_service())
