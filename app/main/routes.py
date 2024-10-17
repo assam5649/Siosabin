@@ -31,7 +31,5 @@ def get_location():
 @main.route('/salinity', methods=['GET'])
 def get_salinity():
     response, status_code = get_salinity_service()
-    response = [[float(salinity)] for salinity, value in response if float(value) == 0.0]
-    response = [response[i:i + 5] for i in range(0, len(response), 5)]
     # 修正 5時間ごとにする。 現在は5つごとになってる
     return jsonify(response), status_code
