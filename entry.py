@@ -9,8 +9,8 @@ from app.predict.continualDays import updateModelDays
 insert_features(forecast())
 insert_featuresDays(forecastDays())
 
-updateModel(connect(), salinity())
-updateModelDays(connectDays(), salinity())
+# updateModel(connect(), salinity())
+# updateModelDays(connectDays(), salinity())
 
 predict(connect())
 for i in connectDaysPredict():
