@@ -58,37 +58,37 @@ def initialize_service():
         INSERT INTO data
         (device_id, location, in_tank, out_tank, salinity)
         VALUES
-        (1, 'POINT(10.00 10.00)', 100, 0, 3);"""
+        (1, 'POINT(10.00, 10.00)', 100, 0, 3);"""
 
         initialize_query2 = """
         INSERT INTO data
         (device_id, location, in_tank, out_tank, salinity)
         VALUES
-        (2, 'POINT(20.00 20.00)', 90, 10, 4);"""
+        (2, 'POINT(20.00, 20.00)', 90, 10, 4);"""
 
         initialize_query3 = """
         INSERT INTO data
         (device_id, location, in_tank, out_tank, salinity)
         VALUES
-        (3, 'POINT(30.00 30.00)', 80, 20, 5);"""
+        (3, 'POINT(30.00, 30.00)', 80, 20, 5);"""
 
         initialize_query4 = """
         INSERT INTO data
         (device_id, location, in_tank, out_tank, salinity)
         VALUES
-        (4, 'POINT(40.00 40.00)', 70, 30, 2);"""
+        (4, 'POINT(40.00, 40.00)', 70, 30, 2);"""
 
         initialize_query5 = """
         INSERT INTO data
         (device_id, location, in_tank, out_tank, salinity)
         VALUES
-        (5, 'POINT(50.00 50.00)', 60, 40, 1);"""
+        (5, 'POINT(50.00, 50.00)', 60, 40, 1);"""
 
         initialize_query6 = """
         INSERT INTO data
         (device_id, location, in_tank, out_tank, salinity)
         VALUES
-        (6, 'POINT(60.00 60.00)', 50, 50, 3);"""
+        (6, 'POINT(60.00, 60.00)', 50, 50, 3);"""
 
         cur.execute(initialize_query1)
         cur.execute(initialize_query2)
@@ -173,6 +173,74 @@ def initialize_service():
         # cur.execute(initialize_query4)
         # cur.execute(initialize_query5)
         # config.commit()
+
+        initialize_query1 = """
+        INSERT INTO target
+        (period_unit, future_offset, future_value)
+        VALUES
+        ('hour', 5, 3);"""
+
+        initialize_query2 = """
+        INSERT INTO target
+        (period_unit, future_offset, future_value)
+        VALUES
+        ('hour', 17, 4)"""
+
+        initialize_query3 = """
+        INSERT INTO target
+        (period_unit, future_offset, future_value)
+        VALUES
+        ('hour', 5, 5)"""
+
+        initialize_query4 = """
+        INSERT INTO target
+        (period_unit, future_offset, future_value)
+        VALUES
+        ('hour', 17, 1)"""
+
+        initialize_query5 = """
+        INSERT INTO target
+        (device_id, location, in_tank, out_tank, salinity)
+        VALUES
+        ('day', 1, 2)"""
+
+        initialize_query6 = """
+        INSERT INTO target
+        (device_id, location, in_tank, out_tank, salinity)
+        VALUES
+        ('day', 2, 3)"""
+
+        initialize_query7 = """
+        INSERT INTO target
+        (period_unit, future_offset, future_value)
+        VALUES
+        ('day', 3, 4)"""
+
+        initialize_query8 = """
+        INSERT INTO target
+        (period_unit, future_offset, future_value)
+        VALUES
+        ('day', 4, 5)"""
+
+        initialize_query9 = """
+        INSERT INTO target
+        (period_unit, future_offset, future_value)
+        VALUES
+        ('day', 5, 1)"""
+
+        initialize_query9 = """
+        INSERT INTO target
+        (period_unit, future_offset, future_value)
+        VALUES
+        ('day', 6, 2)"""
+
+        cur.execute(initialize_query1)
+        cur.execute(initialize_query2)
+        cur.execute(initialize_query3)
+        cur.execute(initialize_query4)
+        cur.execute(initialize_query5)
+        cur.execute(initialize_query6)
+        config.commit()
         
     
     except IntegrityError as e:
