@@ -1,6 +1,6 @@
 import mysql.connector
 from mysql.connector import Error, IntegrityError
-# from .utils import categorize
+from .utils import categorize
 import numpy as np
 import json
 from collections import defaultdict
@@ -19,9 +19,11 @@ def create_user_service(data):
 
         cur = config.cursor()
 
-        category = categorize(data[salinity])
+        category = categorize(data['salinity'])
 
-        cur.execute("INSERT INTO data (device_id, location, in_tank, out_tank, salinity) VALUES (%s, %s, %s, %s, %s)", (data['device_id'], data['location'], data['in_tank'], data['out_tank'], data['salinity']))
+        print("=-----------------------")
+
+        cur.execute("INSERT INTO data (device_id, location, in_tank, out_tank, salinity) VALUES (%s, %s, %s, %s, %s)", (data['device_id'], data['location'], data['in_tank'], data['out_tank'], category))
 
         config.commit()
         
@@ -55,10 +57,10 @@ def get_user_service(device_id):
 
         cur = config.cursor()
 
-        cur.execute("SELECT * FROM data WHERE device_id = %s ORDER BY id DESC LIMIT 4", (device_id,))
+        cur.execute("SELECT * FROM data WHERE device_id = %s ORDER BY id DESC LIMIT 1", (device_id,))
         
         cur.statement
-        result = cur.fetchone()
+        result = cur.fetchall()
         
         if result is None:
             return ({'message': 'device_id not found'}), 401
@@ -167,5 +169,3 @@ def get_salinity_service():
             cur.close()
         if config:
             config.close()
-
-print(get_salinity_service())

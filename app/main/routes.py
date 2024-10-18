@@ -10,6 +10,7 @@ def index():
 def create_user():
     try:
         data = request.get_json()
+        print(data)
         if data is None:
             return "Bad Request: No JSON received", 400
         response, status_code = create_user_service(data)
@@ -31,5 +32,4 @@ def get_location():
 @main.route('/salinity', methods=['GET'])
 def get_salinity():
     response, status_code = get_salinity_service()
-    # 修正 5時間ごとにする。 現在は5つごとになってる
     return jsonify(response), status_code

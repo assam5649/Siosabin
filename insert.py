@@ -200,13 +200,13 @@ def initialize_service():
 
         initialize_query5 = """
         INSERT INTO target
-        (device_id, location, in_tank, out_tank, salinity)
+        (period_unit, future_offset, future_value)
         VALUES
         ('day', 1, 2)"""
 
         initialize_query6 = """
         INSERT INTO target
-        (device_id, location, in_tank, out_tank, salinity)
+        (period_unit, future_offset, future_value)
         VALUES
         ('day', 2, 3)"""
 
