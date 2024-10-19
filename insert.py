@@ -222,13 +222,13 @@ def initialize_service():
         VALUES
         ('day', 4, 5)"""
 
-        initialize_query8 = """
+        initialize_query9 = """
         INSERT INTO target
         (period_unit, future_offset, future_value)
         VALUES
         ('day', 5, 1)"""
 
-        initialize_query9 = """
+        initialize_query10 = """
         INSERT INTO target
         (period_unit, future_offset, future_value)
         VALUES
@@ -243,6 +243,7 @@ def initialize_service():
         cur.execute(initialize_query7)
         cur.execute(initialize_query8)
         cur.execute(initialize_query9)
+        cur.execute(initialize_query10)
         config.commit()
         
     
