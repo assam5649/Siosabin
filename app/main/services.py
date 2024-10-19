@@ -21,8 +21,6 @@ def create_user_service(data):
 
         category = categorize(data['salinity'])
 
-        print("=-----------------------")
-
         cur.execute("INSERT INTO data (device_id, location, in_tank, out_tank, salinity) VALUES (%s, %s, %s, %s, %s)", (data['device_id'], data['location'], data['in_tank'], data['out_tank'], category))
 
         config.commit()
@@ -153,6 +151,9 @@ def get_salinity_service():
             grouped_data[entry[2]].append(entry)
 
         result = [grouped_data[f"Group {i+1}"] for i in range(5)]
+        for i in range(5):
+            group_key = f"Group {i+1}"
+            result[group_key] = grouped_data.get(group_key, None)
         
         return result, 200
     

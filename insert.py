@@ -240,6 +240,9 @@ def initialize_service():
         cur.execute(initialize_query4)
         cur.execute(initialize_query5)
         cur.execute(initialize_query6)
+        cur.execute(initialize_query7)
+        cur.execute(initialize_query8)
+        cur.execute(initialize_query9)
         config.commit()
         
     
