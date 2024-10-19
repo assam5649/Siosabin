@@ -222,7 +222,7 @@ def initialize_service():
         VALUES
         ('day', 4, 5)"""
 
-        initialize_query9 = """
+        initialize_query8 = """
         INSERT INTO target
         (period_unit, future_offset, future_value)
         VALUES

@@ -145,15 +145,16 @@ def get_salinity_service():
 
         data = cur.fetchall()
 
+        result = []
+
         grouped_data = defaultdict(list)
 
         for entry in data:
             grouped_data[entry[2]].append(entry)
 
-        result = [grouped_data[f"Group {i+1}"] for i in range(5)]
         for i in range(5):
             group_key = f"Group {i+1}"
-            result[group_key] = grouped_data.get(group_key, None)
+            result.append(grouped_data.get(group_key, -1))
         
         return result, 200
     
